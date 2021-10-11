@@ -8,13 +8,14 @@ const StyledNavBar = styled.div`
   display: flex;
   justify-content: space-between;
   aline-items: center;
-  background-color: #334756;
-  padding: 10px 10px;
   a {
     color: #fff;
+    margin: 0;
+    font-size: 1.1rem;
   }
   i {
     font-size: 2.2rem;
+    padding: 10px 10px;
   }
 `;
 
@@ -27,7 +28,7 @@ const StyledLinkContainer = styled.div`
 
 const NavBar: React.FC = () => {
   return (
-    <Header>
+    <Header style={{ backgroundColor: '#334756' }}>
       <StyledNavBar>
         <Link to="/">
           <i className="fab fa-affiliatetheme"></i>

@@ -15,22 +15,3 @@ export const LIST_OF_COUNTRIES = [
   'Mexico',
   'New Zealand',
 ];
-
-export const PHONE_NUMBER_MASK = [
-  '+7',
-  '(',
-  /[1-9]/,
-  /\d/,
-  /\d/,
-  ')',
-  ' ',
-  /\d/,
-  /\d/,
-  /\d/,
-  '-',
-  /\d/,
-  /\d/,
-  '-',
-  /\d/,
-  /\d/,
-];

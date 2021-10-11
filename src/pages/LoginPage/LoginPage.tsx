@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IValuesLogin } from '../../interfaces';
 import { Layout } from 'antd';
 import { Formik, Field, Form, FormikHelpers } from 'formik';
@@ -11,18 +11,18 @@ const { Content } = Layout;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  h1 {
-    aline-items: center;
+  margin-top: 100px;
+
+  input {
+    margin-bottom: 10px;
   }
-  form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 60vw;
-    padding: 5px 10px;
+
+  button {
+    color: white;
+    margin-top: 20px;
   }
 `;
+
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -30,33 +30,34 @@ const StyledContainer = styled.div`
   background-color: #efefef;
   height: 100vh;
 `;
+
 const StyledError = styled.div`
   color: red;
 `;
 
 const LoginPage: React.FC<{}> = () => {
-
   const initialValues: IValuesLogin = {
     email: '',
     password: '',
   };
 
   const [logValues, setLogValues] = useState<IValuesLogin>(initialValues);
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState<boolean>(false);
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
-    password: Yup.string()
-      .min(6, 'Too Short!')
-      .max(30, 'Too Long!')
-      .required('Required'),
+    password: Yup.string().min(6, 'Too Short!').required('Required'),
   });
+
+  useEffect(() => {
+    setIsValid(false);
+  }, []);
 
   return (
     <Content>
       <StyledContainer>
         <Wrapper>
-          <h1>Login</h1>
+          <h1>Please, Login</h1>
 
           <Formik
             initialValues={logValues}
@@ -81,27 +82,22 @@ const LoginPage: React.FC<{}> = () => {
                   : setIsValid(true)}
 
                 <label htmlFor="email">Email</label>
-                <Field
-                  id="email"
-                  name="email"
-                  placeholder="john@acme.com"
-                  type="email"
-                />
+                <Field id="email" name="email" type="email" />
                 {errors.email && touched.email ? (
                   <StyledError>{errors.email}</StyledError>
                 ) : null}
 
                 <label htmlFor="password">Password </label>
-                <Field id="password" name="password" placeholder="Password" />
+                <Field id="password" name="password" />
                 {errors.password && touched.password ? (
                   <StyledError>{errors.password}</StyledError>
                 ) : null}
 
                 {isValid ? (
-                  <button type="submit">Submit</button>
+                  <button type="submit">Log In</button>
                 ) : (
                   <button type="submit" disabled>
-                    Submit
+                    Log In
                   </button>
                 )}
               </Form>
