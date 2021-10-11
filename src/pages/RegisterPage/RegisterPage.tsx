@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, FC } from 'react';
 import { IValuesRegister } from '../../interfaces';
-import { Layout } from 'antd';
-import { Formik, Field, Form, FormikHelpers } from 'formik';
+import { Field, Formik, Form } from 'formik';
 import { LIST_OF_COUNTRIES } from '../../constants';
-import { Select } from 'antd';
+import { Select, Button, Alert, Row, Col, Space, Input, Layout } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import * as Yup from 'yup';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
@@ -11,34 +11,15 @@ import 'antd/dist/antd.css';
 const { Content } = Layout;
 const { Option } = Select;
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 100px;
-
-  input {
-    margin-bottom: 10px;
-  }
-
-  button {
-    color: white;
-    margin-top: 20px;
-  }
+const StyledContainer = styled(Row)`
+  height: 93vh;
 `;
 
-const StyledContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  aline-items: center;
-  background-color: #efefef;
-  height: 100vh;
+const StyledField = styled(Field)`
+  min-width: 400px;
 `;
 
-const StyledError = styled.div`
-  color: red;
-`;
-
-const RegisterPage: React.FC<{}> = () => {
+const RegisterPage: FC = () => {
   const initialValues: IValuesRegister = {
     firstName: '',
     lastName: '',
@@ -48,15 +29,27 @@ const RegisterPage: React.FC<{}> = () => {
     country: '',
   };
 
-  const [regValues, setRegValues] = useState<IValuesRegister>(initialValues);
+  const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [country, setCountry] = useState<string>('');
-  const [isValid, setIsValid] = useState<boolean>(false);
 
-  function handleChange(value: string) {
+  const handleChange = (value: string): void => {
     setCountry(value);
-  }
+  };
 
-  const SignupSchema = Yup.object().shape({
+  const handleSubmit = (values: IValuesRegister): void => {
+    let val = values.phoneNumber;
+    values.phoneNumber = `+7(${val.substring(0, 3)})${val.substring(
+      3,
+      6
+    )}-${val.substring(6, 8)}-${val.substring(8, val.length)}`;
+
+    setIsSubmit(true);
+    setTimeout(() => {
+      setIsSubmit(false);
+    }, 2000);
+  };
+
+  const signUpSchema = Yup.object().shape({
     firstName: Yup.string()
       .min(2, 'Too Short!')
       .max(50, 'Too Long!')
@@ -80,110 +73,103 @@ const RegisterPage: React.FC<{}> = () => {
       ),
   });
 
-  useEffect(() => {
-    setIsValid(false);
-  }, []);
-
   return (
     <Content>
-      <StyledContainer>
-        <Wrapper>
-          <h1>Please, Sign Up</h1>
+      <StyledContainer justify={'center'}>
+        <Row align={'middle'} justify={'center'}>
+          <Col span={24}>
 
-          <Formik
-            initialValues={regValues}
-            validationSchema={SignupSchema}
-            validateOnChange
-            onSubmit={(
-              values: IValuesRegister,
-              { setSubmitting }: FormikHelpers<IValuesRegister>
-            ) => {
-              setTimeout(() => {
-                const user: IValuesRegister = values;
-                let val = user.phoneNumber;
-                user.phoneNumber = `+7(${val.substring(0, 3)})${val.substring(
-                  3,
-                  6
-                )}-${val.substring(6, 8)}-${val.substring(8, val.length)}`;
+            <Col span={24}>
+              <h1>Please, Sign Up</h1>
+            </Col>
 
-                setRegValues(user);
-                setSubmitting(false);
-              }, 500);
-            }}
-          >
-            {({ errors, touched }) => (
-              <Form>
-                {!errors.firstName &&
-                !errors.lastName &&
-                !errors.password &&
-                !errors.phoneNumber &&
-                !errors.email &&
-                country
-                  ? setIsValid(true)
-                  : setIsValid(false)}
+            <Formik
+              initialValues={initialValues}
+              validationSchema={signUpSchema}
+              validateOnChange
+              onSubmit={(values: IValuesRegister) => {
+                setTimeout(() => {
+                  handleSubmit(values);
+                }, 500);
+              }}
+            >
+              {({ errors, touched, isValid }) => (
+                <Form>
+                  <Space direction="vertical">
 
-                <label htmlFor="firstName">First Name</label>
-                <Field id="firstName" name="firstName" />
-                {errors.firstName && touched.firstName ? (
-                  <StyledError>{errors.firstName}</StyledError>
-                ) : null}
+                    {isSubmit && <Alert message="Success!" type="success" />}
 
-                <label htmlFor="lastName">Last Name</label>
-                <Field id="lastName" name="lastName" />
-                {errors.lastName && touched.lastName ? (
-                  <StyledError>{errors.lastName}</StyledError>
-                ) : null}
+                    <label htmlFor="firstName">First Name</label>
+                    <StyledField id="firstName" name="firstName" />
 
-                <label htmlFor="email">Email</label>
-                <Field id="email" name="email" type="email" />
-                {errors.email && touched.email ? (
-                  <StyledError>{errors.email}</StyledError>
-                ) : null}
+                    {errors.firstName && touched.firstName && (
+                      <Alert message={errors.firstName} type="error" />
+                    )}
 
-                <label htmlFor="phoneNumber">Phone number</label>
-                <Field id="phoneNumber" name="phoneNumber" />
+                    <label htmlFor="lastName">Last Name</label>
+                    <StyledField id="lastName" name="lastName" />
 
-                {errors.phoneNumber && touched.phoneNumber ? (
-                  <StyledError>{errors.phoneNumber}</StyledError>
-                ) : null}
+                    {errors.lastName && touched.lastName && (
+                      <Alert message={errors.lastName} type="error" />
+                    )}
 
-                <label htmlFor="password">Password </label>
-                <Field id="password" name="password" />
-                {errors.password && touched.password ? (
-                  <StyledError>{errors.password}</StyledError>
-                ) : null}
+                    <label htmlFor="email">Email</label>
+                    <StyledField id="email" name="email" type="email" />
 
-                <label htmlFor="country">Country</label>
-                <Select
-                  showSearch
-                  style={{ maxWidth: 600 }}
-                  placeholder="Russia"
-                  defaultValue="Select a country"
-                  onChange={handleChange}
-                >
-                  {LIST_OF_COUNTRIES.map((country, index) => {
-                    return (
-                      <Option key={index} value={country}>
-                        {country}
-                      </Option>
-                    );
-                  })}
-                </Select>
-                {!country ? (
-                  <StyledError>{'Country is required'}</StyledError>
-                ) : null}
+                    {errors.email && touched.email && (
+                      <Alert message={errors.email} type="error" />
+                    )}
 
-                {isValid ? (
-                  <button type="submit">Sign Up</button>
-                ) : (
-                  <button type="submit" disabled>
-                    Sign Up
-                  </button>
-                )}
-              </Form>
-            )}
-          </Formik>
-        </Wrapper>
+                    <label htmlFor="phoneNumber">Phone number</label>
+                    <StyledField id="phoneNumber" name="phoneNumber" />
+
+                    {errors.phoneNumber && touched.phoneNumber && (
+                      <Alert message={errors.phoneNumber} type="error" />
+                    )}
+
+                    <label htmlFor="password">Password </label>
+                    <StyledField id="password" name="password" />
+
+                    {errors.password && touched.password && (
+                      <Alert message={errors.password} type="error" />
+                    )}
+
+                    <label htmlFor="country">Country</label>
+                    <Select
+                      showSearch
+                      style={{ minWidth: '400px', marginBottom: '10px' }}
+                      placeholder="Russia"
+                      defaultValue="Select a country"
+                      onChange={handleChange}
+                    >
+                      {LIST_OF_COUNTRIES.map((country, index) => {
+                        return (
+                          <Option key={index} value={country}>
+                            {country}
+                          </Option>
+                        );
+                      })}
+                    </Select>
+
+                    {!country && (
+                      <Alert message={'Country is required'} type="error" />
+                    )}
+
+                    <Button
+                      type="primary"
+                      disabled={!isValid}
+                      htmlType="submit"
+                      style={{ marginTop: '10px' }}
+                    >
+                      Sign Up
+                    </Button>
+
+                  </Space>
+                </Form>
+              )}
+            </Formik>
+          </Col>
+        </Row>
       </StyledContainer>
     </Content>
   );

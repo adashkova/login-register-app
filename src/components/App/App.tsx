@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 import NavBar from '../Layout/NavBar';
 import LoginPage from '../../pages/LoginPage';
 import RegisterPage from '../../pages/RegisterPage';
 
-const App: React.FC = () => {
+const App: FC = () => {
   return (
     <Router>
       <Layout>
