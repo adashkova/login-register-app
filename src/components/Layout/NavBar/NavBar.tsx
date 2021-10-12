@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Layout, Row } from 'antd';
+import { Layout, Row, Col } from 'antd';
 import { DingdingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -15,12 +15,23 @@ const NavBar: FC = () => {
   return (
     <Header style={{ backgroundColor: '#334756' }}>
       <Row align={'middle'} justify={'space-between'}>
-        <StyledLink to="/">
-          <DingdingOutlined style={{ fontSize: '1.5rem' }} />
-        </StyledLink>
-        <Row justify={'space-around'}>
-          <StyledLink to="/login">Login</StyledLink>
-          <StyledLink to="/register">Register</StyledLink>
+
+        <Col xs={1} sm={2} md={4} lg={6} xl={8}>
+          <StyledLink to="/">
+            <DingdingOutlined style={{ fontSize: '1.5rem' }} />
+          </StyledLink>
+        </Col>
+
+        <Row align={'middle'} justify={'end'}>
+
+          <Col xs={14} sm={14} md={10} lg={12} xl={10}>
+            <StyledLink to="/login">Login</StyledLink>
+          </Col>
+          
+          <Col xs={5} sm={10} md={10} lg={12} xl={14}>
+            <StyledLink to="/register">Register</StyledLink>
+          </Col>
+
         </Row>
       </Row>
     </Header>

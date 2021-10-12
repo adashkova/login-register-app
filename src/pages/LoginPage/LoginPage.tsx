@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { IValuesLogin } from '../../interfaces';
-import { Col, Layout, Row, Button, Alert, Space } from 'antd';
+import { Col, Layout, Row, Button, Alert } from 'antd';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
@@ -9,11 +9,17 @@ import 'antd/dist/antd.css';
 const { Content } = Layout;
 
 const StyledContainer = styled(Row)`
-  height: 93vh;
+  height: 100vh;
 `;
 
 const StyledField = styled(Field)`
-  min-width: 400px;
+  min-width: 300px;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  height: 40px;
+  margin: 10px 0;
+  font-size: 1rem;
+  outline: none;
 `;
 
 const LoginPage: FC = () => {
@@ -25,8 +31,10 @@ const LoginPage: FC = () => {
   const [isSubmit, setIsSubmit] = useState(false);
 
   const loginSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Required'),
-    password: Yup.string().min(6, 'Too Short!').required('Required'),
+    email: Yup.string().email('Invalid email').required('Email is required'),
+    password: Yup.string()
+      .min(6, 'Too Short!')
+      .required('Password is required'),
   });
 
   const handleSubmit = (values: IValuesLogin) => {
@@ -40,54 +48,61 @@ const LoginPage: FC = () => {
     <Content>
       <StyledContainer justify={'center'}>
         <Row align={'middle'} justify={'center'}>
-          <Col span={24}>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={loginSchema}
+            validateOnChange
+            onSubmit={values => {
+              handleSubmit(values);
+            }}
+          >
+            {({ errors, touched, isValid }) => (
+              <Form>
+                {isSubmit && <Alert message="Success!" type="success" />}
 
-            <Col span={24}>
-              <h1>Please, Login</h1>
-            </Col>
+                <Row align={'middle'} justify={'center'}>
+                  <h1>Please, Login</h1>
+                </Row>
 
-            <Formik
-              initialValues={initialValues}
-              validationSchema={loginSchema}
-              validateOnChange
-              onSubmit={values => {
-                handleSubmit(values);
-              }}
-            >
-              {({ errors, touched, isValid }) => (
-                <Form>
-                  <Space direction="vertical">
+                <Col span={24}>
+                  <StyledField
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                  />
 
-                    {isSubmit && <Alert message="Success!" type="success" />}
+                  {errors.email && touched.email && (
+                    <Alert message={errors.email} type="error" />
+                  )}
+                </Col>
 
-                    <label htmlFor="email">Email</label>
-                    <StyledField id="email" name="email" type="email" />
+                <Col span={24}>
+                  <StyledField
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                  />
 
-                    {errors.email && touched.email && (
-                      <Alert message={errors.email} type="error" />
-                    )}
+                  {errors.password && touched.password && (
+                    <Alert message={errors.password} type="error" />
+                  )}
+                </Col>
 
-                    <label htmlFor="password">Password</label>
-                    <StyledField id="password" name="password" />
-
-                    {errors.password && touched.password && (
-                      <Alert message={errors.password} type="error" />
-                    )}
-
-                    <Button
-                      type="primary"
-                      disabled={!isValid}
-                      htmlType="submit"
-                      style={{ marginTop: '10px' }}
-                    >
-                      Log In
-                    </Button>
-
-                  </Space>
-                </Form>
-              )}
-            </Formik>
-          </Col>
+                <Row align={'middle'} justify={'center'}>
+                  <Button
+                    type="primary"
+                    disabled={!isValid}
+                    htmlType="submit"
+                    style={{ marginTop: '10px' }}
+                  >
+                    Log In
+                  </Button>
+                </Row>
+                
+              </Form>
+            )}
+          </Formik>
         </Row>
       </StyledContainer>
     </Content>
