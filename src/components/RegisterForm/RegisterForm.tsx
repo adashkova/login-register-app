@@ -70,9 +70,7 @@ const RegisterForm: FC = () => {
     country: Yup.string().required('Country is required'),
   });
 
-  // const fields = ['firstName', 'lastName', 'email', 'phoneNumber', 'password'];
-
-  return (
+   return (
     <Formik
       initialValues={initialValues}
       validationSchema={signUpSchema}
@@ -89,27 +87,7 @@ const RegisterForm: FC = () => {
           <Row align={'middle'} justify={'center'}>
             <h1>Please, Sign Up</h1>
           </Row>
-          {/* {fields.map(field => {
-            
-            return (
-                
-              <Col span={24} key={field}>
-                <StyledField
-                  id={field}
-                  name={field}
-                  placeholder={field[0].toUpperCase() + field.slice(1)}
-                />
-
-                {errors.firstName && touched.firstName && (
-                  <Col span={24}>
-                    
-                    <Alert message={errors.firstName} type="error" />
-                  </Col>
-                )}
-              </Col>
-            );
-          })} */}
-
+    
           <Col span={24}>
             <StyledField
               id="firstName"
