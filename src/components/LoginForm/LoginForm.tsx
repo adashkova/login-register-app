@@ -3,7 +3,7 @@ import { IValuesLogin } from '../../interfaces';
 import { Col, Row, Button, Alert, Input, notification } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
+import { loginSchema } from '../../validation/validationSchemas';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 
@@ -22,14 +22,7 @@ const LoginForm: FC = () => {
     email: '',
     password: '',
   };
-
-  const loginSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Email is required'),
-    password: Yup.string()
-      .min(6, 'Too Short!')
-      .required('Password is required'),
-  });
-
+  
   const openNotification = () => {
     notification.open({
       message: 'Logged',
@@ -49,6 +42,7 @@ const LoginForm: FC = () => {
       {({ errors, touched, isValid, setFieldValue, handleBlur }) => (
 
         <Form>
+            
           <Row align={'middle'} justify={'center'}>
             <h1>Please, Login</h1>
           </Row>
@@ -96,7 +90,7 @@ const LoginForm: FC = () => {
               Log In
             </Button>
           </Row>
-          
+
         </Form>
       )}
     </Formik>
