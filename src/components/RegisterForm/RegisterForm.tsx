@@ -23,7 +23,7 @@ const StyledField = styled(Field)`
     border-color: #1890ff;
   }
   :focus {
-  border-color: #1890ff;
+    border-color: #1890ff;
   }
   ::placeholder { 
     color: #b9b8b8;
