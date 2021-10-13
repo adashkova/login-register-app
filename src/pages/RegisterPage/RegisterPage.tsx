@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Row, Layout } from 'antd';
 import styled from 'styled-components';
-import 'antd/dist/antd.css';
 import RegisterForm from '../../components/RegisterForm';
 
 const { Content } = Layout;

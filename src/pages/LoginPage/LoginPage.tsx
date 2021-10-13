@@ -1,7 +1,6 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Layout, Row } from 'antd';
 import styled from 'styled-components';
-import 'antd/dist/antd.css';
 import LoginForm from '../../components/LoginForm';
 
 const { Content } = Layout;

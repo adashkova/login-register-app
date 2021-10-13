@@ -5,7 +5,6 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Formik, Form, Field } from 'formik';
 import { loginSchema } from '../../validation/validationSchemas';
 import styled from 'styled-components';
-import 'antd/dist/antd.css';
 
 const StyledField = styled(Field)`
   margin: 5px 0;

@@ -6,7 +6,6 @@ import { Select, Button, Alert, Row, Col, notification, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { signUpSchema } from '../../validation/validationSchemas';
 import styled from 'styled-components';
-import 'antd/dist/antd.css';
 
 const { Option } = Select;
 
