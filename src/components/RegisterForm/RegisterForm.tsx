@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { IValuesRegister } from '../../interfaces';
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { LIST_OF_COUNTRIES } from '../../constants';
 import { Select, Button, Alert, Row, Col, notification, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
@@ -10,9 +10,25 @@ import 'antd/dist/antd.css';
 
 const { Option } = Select;
 
-const StyledField = styled(Input)`
+const StyledField = styled(Field)`
   margin: 5px 0;
+  padding: 4px 11px;
   height: 40px;
+  width: 100%;
+  transition: all 0.3s;
+  border: 1px solid #d9d9d9;
+  border-radius: 3px;
+  outline: 0;
+  :hover {
+    border-color: #1890ff;
+  }
+  :focus {
+  border-color: #1890ff;
+  }
+  ::placeholder { 
+    color: #b9b8b8;
+  }
+}
 `;
 
 const StyledPasswordField = styled(Input.Password)`
@@ -30,7 +46,7 @@ const RegisterForm: FC = () => {
     country: '',
   };
 
-  const openNotification = () => {
+  const openNotification = (): void => {
     notification.open({
       message: 'Registration Complete',
       description: '',
@@ -58,9 +74,7 @@ const RegisterForm: FC = () => {
       }}
     >
       {({ errors, touched, isValid, handleBlur, setFieldValue }) => (
-
         <Form>
-
           <Row align="middle" justify="center">
             <h1>Please, Sign Up</h1>
           </Row>
@@ -71,13 +85,9 @@ const RegisterForm: FC = () => {
                 id="firstName"
                 name="firstName"
                 placeholder="FirstName"
-                onChange={e => setFieldValue('firstName', e.target.value)}
-                onBlur={e => handleBlur(e)}
               />
-
               {errors.firstName && touched.firstName && (
                 <Col span={16}>
-                  {' '}
                   <Alert message={errors.firstName} type="error" />
                 </Col>
               )}
@@ -87,11 +97,8 @@ const RegisterForm: FC = () => {
               <StyledField
                 id="lastName"
                 name="lastName"
-                onChange={e => setFieldValue('lastName', e.target.value)}
-                onBlur={e => handleBlur(e)}
                 placeholder="LastName"
               />
-
               {errors.lastName && touched.lastName && (
                 <Col span={16}>
                   <Alert message={errors.lastName} type="error" />
@@ -105,10 +112,7 @@ const RegisterForm: FC = () => {
                 name="email"
                 type="email"
                 placeholder="Email"
-                onChange={e => setFieldValue('email', e.target.value)}
-                onBlur={e => handleBlur(e)}
               />
-
               {errors.email && touched.email && (
                 <Col span={16}>
                   <Alert message={errors.email} type="error" />
@@ -121,10 +125,7 @@ const RegisterForm: FC = () => {
                 id="phoneNumber"
                 name="phoneNumber"
                 placeholder="Phone number"
-                onChange={e => setFieldValue('phoneNumber', e.target.value)}
-                onBlur={e => handleBlur(e)}
               />
-
               {errors.phoneNumber && touched.phoneNumber && (
                 <Col xs={12} sm={14} md={14} lg={16} xl={18}>
                   <Alert message={errors.phoneNumber} type="error" />
@@ -158,7 +159,7 @@ const RegisterForm: FC = () => {
                   }}
                   placeholder="Select a country"
                   onChange={value => setFieldValue('country', value)}
-                  onBlur={e => handleBlur(e)}
+                  onBlur={handleBlur}
                 >
                   {LIST_OF_COUNTRIES.map((country, index) => {
                     return (
@@ -170,7 +171,6 @@ const RegisterForm: FC = () => {
                 </Select>
                 {errors.country && touched.country && (
                   <Col span={16}>
-                    {' '}
                     <Alert message={errors.country} type="error" />
                   </Col>
                 )}
@@ -188,10 +188,8 @@ const RegisterForm: FC = () => {
               Register
             </Button>
           </Row>
-
         </Form>
       )}
-      
     </Formik>
   );
 };

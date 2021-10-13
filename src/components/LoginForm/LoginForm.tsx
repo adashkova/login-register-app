@@ -2,14 +2,30 @@ import React, { FC } from 'react';
 import { IValuesLogin } from '../../interfaces';
 import { Col, Row, Button, Alert, Input, notification } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { loginSchema } from '../../validation/validationSchemas';
 import styled from 'styled-components';
 import 'antd/dist/antd.css';
 
-const StyledField = styled(Input)`
+const StyledField = styled(Field)`
   margin: 5px 0;
+  padding: 4px 11px;
   height: 40px;
+  width: 100%;
+  transition: all 0.3s;
+  border: 1px solid #d9d9d9;
+  border-radius: 3px;
+  outline: 0;
+  :hover {
+    border-color: #1890ff;
+  }
+  :focus {
+  border-color: #1890ff;
+  }
+  ::placeholder { 
+    color: #b9b8b8;
+  }
+}
 `;
 
 const StyledPasswordField = styled(Input.Password)`
@@ -23,7 +39,7 @@ const LoginForm: FC = () => {
     password: '',
   };
 
-  const openNotification = () => {
+  const openNotification = (): void => {
     notification.open({
       message: 'Logged',
       description: '',
@@ -39,9 +55,8 @@ const LoginForm: FC = () => {
         openNotification();
       }}
     >
-      {({ errors, touched, isValid, setFieldValue, handleBlur }) => (
+      {({ errors, touched, isValid, handleBlur, setFieldValue }) => (
         <Form>
-
           <Row align="middle" justify="center">
             <h1>Please, Login</h1>
           </Row>
@@ -53,8 +68,6 @@ const LoginForm: FC = () => {
                 name="email"
                 type="email"
                 placeholder="Email"
-                onChange={e => setFieldValue('email', e.target.value)}
-                onBlur={e => handleBlur(e)}
               />
               {errors.email && touched.email && (
                 <Col xs={14} sm={16} lg={20} xl={24}>
@@ -63,7 +76,7 @@ const LoginForm: FC = () => {
               )}
             </Col>
 
-            <Col xs={14} sm={16} lg={20} xl={24} >
+            <Col xs={14} sm={16} lg={20} xl={24}>
               <StyledPasswordField
                 id="password"
                 name="password"
@@ -92,10 +105,8 @@ const LoginForm: FC = () => {
               Log In
             </Button>
           </Row>
-
         </Form>
       )}
-      
     </Formik>
   );
 };
