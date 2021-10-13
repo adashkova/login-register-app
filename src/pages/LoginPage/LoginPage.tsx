@@ -7,14 +7,14 @@ import LoginForm from '../../components/LoginForm';
 const { Content } = Layout;
 
 const StyledContainer = styled(Row)`
-  height: 100vh;
+  height: 93vh;
 `;
 
 const LoginPage: FC = () => {
   return (
     <Content>
-      <StyledContainer justify={'center'}>
-        <Row align={'middle'} justify={'center'}>
+      <StyledContainer justify="center">
+        <Row align="middle" justify="center">
           <LoginForm />
         </Row>
       </StyledContainer>

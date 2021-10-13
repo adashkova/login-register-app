@@ -22,7 +22,7 @@ const LoginForm: FC = () => {
     email: '',
     password: '',
   };
-  
+
   const openNotification = () => {
     notification.open({
       message: 'Logged',
@@ -40,47 +40,49 @@ const LoginForm: FC = () => {
       }}
     >
       {({ errors, touched, isValid, setFieldValue, handleBlur }) => (
-
         <Form>
-            
-          <Row align={'middle'} justify={'center'}>
+
+          <Row align="middle" justify="center">
             <h1>Please, Login</h1>
           </Row>
 
-          <Col span={24}>
-            <StyledField
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Email"
-              onChange={e => setFieldValue('email', e.target.value)}
-              onBlur={e => handleBlur(e)}
-            />
-          </Col>
+          <Row align="middle" justify="center">
+            <Col xs={14} sm={16} lg={20} xl={24}>
+              <StyledField
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Email"
+                onChange={e => setFieldValue('email', e.target.value)}
+                onBlur={e => handleBlur(e)}
+              />
+              {errors.email && touched.email && (
+                <Col xs={14} sm={16} lg={20} xl={24}>
+                  <Alert message={errors.email} type="error" />
+                </Col>
+              )}
+            </Col>
 
-          {errors.email && touched.email && (
-            <Alert message={errors.email} type="error" />
-          )}
+            <Col xs={14} sm={16} lg={20} xl={24} >
+              <StyledPasswordField
+                id="password"
+                name="password"
+                placeholder="Password"
+                iconRender={visible =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
+                onChange={e => setFieldValue('password', e.target.value)}
+                onBlur={e => handleBlur(e)}
+              />
+              {errors.password && touched.password && (
+                <Col xs={14} sm={16} lg={20} xl={24}>
+                  <Alert message={errors.password} type="error" />
+                </Col>
+              )}
+            </Col>
+          </Row>
 
-          <Col span={24}>
-            <StyledPasswordField
-              id="password"
-              name="password"
-              placeholder="Password"
-              iconRender={visible =>
-                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-              }
-              onChange={e => setFieldValue('password', e.target.value)}
-              onBlur={e => handleBlur(e)}
-            />
-            {errors.password && touched.password && (
-              <Col span={24}>
-                <Alert message={errors.password} type="error" />
-              </Col>
-            )}
-          </Col>
-
-          <Row align={'middle'} justify={'center'}>
+          <Row align="middle" justify="center">
             <Button
               type="primary"
               disabled={!isValid}
@@ -93,6 +95,7 @@ const LoginForm: FC = () => {
 
         </Form>
       )}
+      
     </Formik>
   );
 };

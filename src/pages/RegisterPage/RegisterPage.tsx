@@ -13,8 +13,8 @@ const StyledContainer = styled(Row)`
 const RegisterPage: FC = () => {
   return (
     <Content>
-      <StyledContainer justify={'center'}>
-        <Row align={'middle'} justify={'center'}>
+      <StyledContainer justify="center">
+        <Row align="middle" justify="center">
           <RegisterForm />
         </Row>
       </StyledContainer>

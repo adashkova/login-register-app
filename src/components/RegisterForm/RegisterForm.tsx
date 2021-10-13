@@ -61,121 +61,124 @@ const RegisterForm: FC = () => {
 
         <Form>
 
-          <Row align={'middle'} justify={'center'}>
+          <Row align="middle" justify="center">
             <h1>Please, Sign Up</h1>
           </Row>
 
-          <Col span={24}>
-            <StyledField
-              id="firstName"
-              name="firstName"
-              placeholder="FirstName"
-              onChange={e => setFieldValue('firstName', e.target.value)}
-              onBlur={e => handleBlur(e)}
-            />
+          <Row align="middle" justify="center">
+            <Col span={16}>
+              <StyledField
+                id="firstName"
+                name="firstName"
+                placeholder="FirstName"
+                onChange={e => setFieldValue('firstName', e.target.value)}
+                onBlur={e => handleBlur(e)}
+              />
 
-            {errors.firstName && touched.firstName && (
-              <Col span={24}>
-                {' '}
-                <Alert message={errors.firstName} type="error" />
-              </Col>
-            )}
-          </Col>
+              {errors.firstName && touched.firstName && (
+                <Col span={16}>
+                  {' '}
+                  <Alert message={errors.firstName} type="error" />
+                </Col>
+              )}
+            </Col>
 
-          <Col span={24}>
-            <StyledField
-              id="lastName"
-              name="lastName"
-              onChange={e => setFieldValue('lastName', e.target.value)}
-              onBlur={e => handleBlur(e)}
-              placeholder="LastName"
-            />
+            <Col span={16}>
+              <StyledField
+                id="lastName"
+                name="lastName"
+                onChange={e => setFieldValue('lastName', e.target.value)}
+                onBlur={e => handleBlur(e)}
+                placeholder="LastName"
+              />
 
-            {errors.lastName && touched.lastName && (
-              <Col span={24}>
-                <Alert message={errors.lastName} type="error" />
-              </Col>
-            )}
-          </Col>
+              {errors.lastName && touched.lastName && (
+                <Col span={16}>
+                  <Alert message={errors.lastName} type="error" />
+                </Col>
+              )}
+            </Col>
 
-          <Col span={24}>
-            <StyledField
-              id="email"
-              name="email"
-              type="email"
-              placeholder="Email"
-              onChange={e => setFieldValue('email', e.target.value)}
-              onBlur={e => handleBlur(e)}
-            />
+            <Col span={16}>
+              <StyledField
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Email"
+                onChange={e => setFieldValue('email', e.target.value)}
+                onBlur={e => handleBlur(e)}
+              />
 
-            {errors.email && touched.email && (
-              <Col span={24}>
-                <Alert message={errors.email} type="error" />
-              </Col>
-            )}
-          </Col>
+              {errors.email && touched.email && (
+                <Col span={16}>
+                  <Alert message={errors.email} type="error" />
+                </Col>
+              )}
+            </Col>
 
-          <Col span={24}>
-            <StyledField
-              id="phoneNumber"
-              name="phoneNumber"
-              placeholder="Phone number"
-              onChange={e => setFieldValue('phoneNumber', e.target.value)}
-              onBlur={e => handleBlur(e)}
-            />
+            <Col span={16}>
+              <StyledField
+                id="phoneNumber"
+                name="phoneNumber"
+                placeholder="Phone number"
+                onChange={e => setFieldValue('phoneNumber', e.target.value)}
+                onBlur={e => handleBlur(e)}
+              />
 
-            {errors.phoneNumber && touched.phoneNumber && (
-              <Col span={24}>
-                <Alert message={errors.phoneNumber} type="error" />
-              </Col>
-            )}
-          </Col>
+              {errors.phoneNumber && touched.phoneNumber && (
+                <Col xs={12} sm={14} md={14} lg={16} xl={18}>
+                  <Alert message={errors.phoneNumber} type="error" />
+                </Col>
+              )}
+            </Col>
 
-          <Col span={24}>
-            <StyledPasswordField
-              id="password"
-              name="password"
-              placeholder="Password"
-              iconRender={visible =>
-                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-              }
-              onChange={e => setFieldValue('password', e.target.value)}
-              onBlur={e => handleBlur(e)}
-            />
-            {errors.password && touched.password && (
-              <Col span={24}>
-                <Alert message={errors.password} type="error" />
-              </Col>
-            )}
-          </Col>
+            <Col span={16}>
+              <StyledPasswordField
+                id="password"
+                name="password"
+                placeholder="Password"
+                iconRender={visible =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
+                onChange={e => setFieldValue('password', e.target.value)}
+                onBlur={e => handleBlur(e)}
+              />
+              {errors.password && touched.password && (
+                <Col span={16}>
+                  <Alert message={errors.password} type="error" />
+                </Col>
+              )}
+            </Col>
 
-          <Col span={24}>
-            <Select
-              style={{
-                margin: '10px 0',
-                width: '300px',
-              }}
-              placeholder="Select a country"
-              onChange={value => setFieldValue('country', value)}
-              onBlur={e => handleBlur(e)}
-            >
-              {LIST_OF_COUNTRIES.map((country, index) => {
-                return (
-                  <Option key={index} value={country}>
-                    {country}
-                  </Option>
-                );
-              })}
-            </Select>
-            {errors.country && touched.country && (
-              <Col span={24}>
-                {' '}
-                <Alert message={errors.country} type="error" />
-              </Col>
-            )}
-          </Col>
+            <Col xs={16}>
+              <Row align="middle" justify="center">
+                <Select
+                  style={{
+                    margin: '10px 0',
+                  }}
+                  placeholder="Select a country"
+                  onChange={value => setFieldValue('country', value)}
+                  onBlur={e => handleBlur(e)}
+                >
+                  {LIST_OF_COUNTRIES.map((country, index) => {
+                    return (
+                      <Option key={index} value={country}>
+                        {country}
+                      </Option>
+                    );
+                  })}
+                </Select>
+                {errors.country && touched.country && (
+                  <Col span={16}>
+                    {' '}
+                    <Alert message={errors.country} type="error" />
+                  </Col>
+                )}
+              </Row>
+            </Col>
+          </Row>
 
-          <Row align={'middle'} justify={'center'}>
+          <Row align="middle" justify="center">
             <Button
               type="primary"
               disabled={!isValid}
@@ -185,9 +188,10 @@ const RegisterForm: FC = () => {
               Register
             </Button>
           </Row>
-          
+
         </Form>
       )}
+      
     </Formik>
   );
 };
